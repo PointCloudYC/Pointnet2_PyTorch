@@ -11,6 +11,10 @@ torch.backends.cudnn.benchmark = True
 
 
 def hydra_params_to_dotdict(hparams):
+    """convert dict object to dot dict form(i.e. naive form of dict w/o nested dict)
+    Args:
+        hparams (dict): key-value collection
+    """
     def _to_dot_dict(cfg):
         res = {}
         for k, v in cfg.items():
