@@ -5,6 +5,7 @@ from pointnet2_ops.pointnet2_modules import PointnetFPModule, PointnetSAModule
 from torch.utils.data import DataLoader
 
 from pointnet2.data import Indoor3DSemSeg
+from pointnet2.data import PSNet3DSemSeg
 from pointnet2.models.pointnet2_ssg_cls import PointNet2ClassificationSSG
 
 
@@ -90,5 +91,9 @@ class PointNet2SemSegSSG(PointNet2ClassificationSSG):
         return self.fc_lyaer(l_features[0])
 
     def prepare_data(self):
-        self.train_dset = Indoor3DSemSeg(self.hparams["num_points"], train=True)
-        self.val_dset = Indoor3DSemSeg(self.hparams["num_points"], train=False)
+        if self.hparams['dataset.name']=='s3dis':
+            self.train_dset = Indoor3DSemSeg(self.hparams["num_points"], train=True)
+            self.val_dset = Indoor3DSemSeg(self.hparams["num_points"], train=False)
+        elif self.hparams['dataset.name']=='psnet':
+            self.train_dset = PSNet3DSemSeg(self.hparams["num_points"], train=True)
+            self.val_dset = PSNet3DSemSeg(self.hparams["num_points"], train=False)

@@ -34,7 +34,8 @@ def hydra_params_to_dotdict(hparams):
 def main(cfg):
     model = hydra.utils.instantiate(cfg.task_model, hydra_params_to_dotdict(cfg))
 
-    early_stop_callback = pl.callbacks.EarlyStopping(patience=5)
+    # early_stop_callback = pl.callbacks.EarlyStopping(patience=5)
+    early_stop_callback = pl.callbacks.EarlyStopping(patience=20)
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
         monitor="val_acc",
         mode="max",
