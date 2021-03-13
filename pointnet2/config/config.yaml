@@ -1,12 +1,12 @@
 defaults:
     - task: semseg
     - model: ssg
-    - dataset: psnet
     - task_model: ${defaults.0.task}-${defaults.1.model}
+    - dataset: psnet
 
 hydra:
   run:
-    dir: outputs
+    dir: outputs-psnet
 
 gpus:
     - 0
