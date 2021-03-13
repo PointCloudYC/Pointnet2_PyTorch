@@ -1,6 +1,7 @@
 defaults:
-    - task: cls
+    - task: semseg
     - model: ssg
+    - dataset: psnet
     - task_model: ${defaults.0.task}-${defaults.1.model}
 
 hydra:

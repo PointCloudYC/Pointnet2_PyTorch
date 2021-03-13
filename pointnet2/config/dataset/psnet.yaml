@@ -1,0 +1,11 @@
+dataset:
+    name: psnet
+    categories: 
+      ibeam
+      pipe
+      pump
+      rectangularbeam
+      tank
+    download: False
+
+

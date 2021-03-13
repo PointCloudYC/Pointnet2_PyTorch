@@ -1,0 +1,5 @@
+dataset:
+    name: s3dis
+    download: False
+
+
