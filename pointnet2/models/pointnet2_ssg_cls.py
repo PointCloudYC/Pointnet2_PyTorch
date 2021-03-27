@@ -158,6 +158,24 @@ class PointNet2ClassificationSSG(pl.LightningModule):
 
         return reduced_outputs
 
+    def test_step(self, batch, batch_idx):
+        return self.validation_step(batch,batch_idx)
+
+    def test_end(self, outputs):
+        reduced_outputs = {}
+        for k in outputs[0]:
+            for o in outputs:
+                reduced_outputs[k] = reduced_outputs.get(k, []) + [o[k]]
+
+        for k in reduced_outputs:
+            reduced_outputs[k] = torch.stack(reduced_outputs[k]).mean()
+
+        reduced_outputs.update(
+            dict(log=reduced_outputs.copy(), progress_bar=reduced_outputs.copy())
+        )
+
+        return reduced_outputs
+
     def configure_optimizers(self):
         lr_lbmd = lambda _: max(
             self.hparams["optimizer.lr_decay"]
@@ -227,4 +245,7 @@ class PointNet2ClassificationSSG(pl.LightningModule):
         return self._build_dataloader(self.train_dset, mode="train")
 
     def val_dataloader(self):
+        return self._build_dataloader(self.val_dset, mode="val")
+
+    def test_dataloader(self):
         return self._build_dataloader(self.val_dset, mode="val")
